@@ -1,8 +1,7 @@
 import {useEffect,useState} from 'react'
 import {ROOT,listWorks,signIn,setupFolders,upload} from './drive'
-const C={name:'Tu Nombre',tagline:'Edito reels, shorts y entrevistas que retienen a la audiencia.',whatsapp:'573000000000',instagram:'usuario',email:'correo@ejemplo.com'}
-const thumb=id=>`https://drive.google.com/thumbnail?id=${id}&sz=w640`
-
+const C={name:'Jackedits',tagline:'Edito reels, shorts y entrevistas que retienen a la audiencia.',whatsapp:'573006770687',instagram:'@jacks0n_areval0',email:'jackson97parada@gmail.com'}
+const thumb=w=>w.thumbnailLink?w.thumbnailLink.replace(/=s\d+$/,'=s480'):`https://drive.google.com/thumbnail?id=${w.id}&sz=w480`
 function Admin(){
   const [ok,setOk]=useState(false),[cats,setCats]=useState([]),[root,setRoot]=useState(''),[msg,setMsg]=useState(''),[busy,setBusy]=useState(false)
   const [f,setF]=useState({file:null,folderId:'',title:'',description:''})
@@ -46,7 +45,7 @@ function Site(){
       {err&&<p className="text-zinc-400">No se pudieron cargar los trabajos.</p>}
       <div className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4">
         {shown.map(w=><button key={w.id} onClick={()=>setSel(w)} className="up group relative aspect-[9/16] overflow-hidden rounded-xl bg-zinc-900 text-left">
-          <img loading="lazy" src={thumb(w.id)} alt={w.title} onError={e=>e.target.style.display='none'} className="h-full w-full object-cover transition duration-500 group-hover:scale-105"/>
+          <img loading="lazy" src={thumb(w)} alt={w.title} onError={e=>e.target.style.display='none'} className="h-full w-full object-cover transition duration-500 group-hover:scale-105"/>
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent"/>
           <div className="absolute bottom-0 p-3"><span className="text-xs capitalize text-fuchsia-300">{w.cat.toLowerCase()}</span><p className="font-semibold leading-tight">{w.title}</p></div>
         </button>)}

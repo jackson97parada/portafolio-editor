@@ -1,7 +1,7 @@
 const KEY=import.meta.env.VITE_DRIVE_API_KEY, CID=import.meta.env.VITE_OAUTH_CLIENT_ID
 export const ROOT=import.meta.env.VITE_ROOT_FOLDER_ID
 const API='https://www.googleapis.com/drive/v3/files'
-const list=async(p,o)=>{const r=await fetch(`${API}?q=${encodeURIComponent(p)}&fields=files(id,name,description,createdTime)&orderBy=createdTime%20${o}&pageSize=100&key=${KEY}`);if(!r.ok)throw new Error(r.status);return (await r.json()).files}
+const list=async(p,o)=>{const r=await fetch(`${API}?q=${encodeURIComponent(p)}&fields=files(id,name,description,createdTime,thumbnailLink)&orderBy=createdTime%20${o}&pageSize=100&key=${KEY}`);if(!r.ok)throw new Error(r.status);return (await r.json()).files}
 export async function listWorks(){
   const cats=await list(`'${ROOT}' in parents and mimeType='application/vnd.google-apps.folder' and trashed=false`,'asc')
   const works=(await Promise.all(cats.map(async c=>(await list(`'${c.id}' in parents and mimeType contains 'video/' and trashed=false`,'desc')).map(f=>({...f,title:f.name.replace(/\.[^.]+$/,''),cat:c.name}))))).flat()
